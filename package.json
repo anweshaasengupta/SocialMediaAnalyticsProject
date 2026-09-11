@@ -1,0 +1,23 @@
+{
+  "name": "socialmediaanalytics",
+  "version": "1.0.0",
+  "main": "index.js",
+ "scripts": {
+  "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && ..\\venv\\Scripts\\python.exe -m uvicorn main:app --reload\""
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anweshaasengupta/SocialMediaAnalyticsProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anweshaasengupta/SocialMediaAnalyticsProject/issues"
+  },
+  "homepage": "https://github.com/anweshaasengupta/SocialMediaAnalyticsProject#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
