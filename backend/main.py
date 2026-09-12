@@ -65,7 +65,7 @@ def _load() -> pd.DataFrame:
 
 
 def _clean(series: pd.Series) -> pd.Series:
-    """Strip whitespace and drop stringified nulls."""
+    """Strip whitespace and normalize stringified nulls to pd.NA."""
     return series.astype(str).str.strip().replace(
         {"nan": pd.NA, "None": pd.NA, "": pd.NA}
     )
@@ -218,9 +218,9 @@ def posts(
     if search.strip():
         q = search.strip().lower()
         mask = (
-            sub["Text"].astype(str).str.lower().str.contains(q, na=False)
-            | sub["User"].str.lower().str.contains(q, na=False)
-            | sub["Hashtags"].astype(str).str.lower().str.contains(q, na=False)
+            sub["Text"].astype(str).str.lower().str.contains(q, na=False, regex=False)
+            | sub["User"].str.lower().str.contains(q, na=False, regex=False)
+            | sub["Hashtags"].astype(str).str.lower().str.contains(q, na=False, regex=False)
         )
         sub = sub[mask]
 
@@ -440,7 +440,7 @@ def ingest(posts: list[IngestPost]):
 
     try:
         df = _load()
-        extra = pd.DataFrame(rows, columns=df.columns)
+        extra = pd.DataFrame(rows).reindex(columns=df.columns)
         merged = pd.concat([df, extra], ignore_index=True)
         merged.to_csv(_resolve_csv(), index=False)
     except HTTPException:

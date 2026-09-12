@@ -15,10 +15,13 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE ?? "http://127.0.0.1:8000";
-const API_URL =
-  import.meta.env.VITE_API_URL ?? `${API_BASE}/api/analytics`;
+const API_URL: string =
+  import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000/api/analytics";
+// Derive the host base from VITE_API_URL so a custom analytics URL keeps
+// network/posts/timeline/insights on the same host. Set VITE_API_BASE
+// explicitly for full control.
+const API_BASE: string =
+  import.meta.env.VITE_API_BASE ?? API_URL.replace(/\/api\/analytics\/?$/, "");
 const NETWORK_URL = `${API_BASE}/api/network`;
 const POSTS_URL = `${API_BASE}/api/posts`;
 const TIMESERIES_URL = `${API_BASE}/api/timeseries`;
@@ -262,7 +265,7 @@ function App() {
     return { pos, W, H };
   }, [network]);
 
-  if (error) {
+  if (error && !data) {
     return (
       <div className="loading-screen">
         <div>
@@ -501,6 +504,20 @@ function App() {
             </div>
 
           </section>
+
+
+          {/* STALE-DATA WARNING — backend hiccup during live polling */}
+          {error && data && (
+            <div className="error-banner" role="alert">
+              <span>⚠ Live update failed — showing last good data.</span>
+              <button
+                className="filter-button"
+                onClick={() => { setError(null); setReloadKey((k) => k + 1); }}
+              >
+                Retry now
+              </button>
+            </div>
+          )}
 
 
           {/* OVERVIEW */}
@@ -1136,7 +1153,7 @@ function App() {
                         <span>degree {n.degree}</span>
                         <span>pagerank {n.pagerank}</span>
                         <span>betweenness {n.betweenness}</span>
-                        <span>engagement {n.engagement}</span>
+                        <span>engagement {Math.round(n.engagement)}</span>
                       </div>
                     );
                   })()}
@@ -1150,7 +1167,7 @@ function App() {
                           className={selectedNode === f.user ? "chip active" : "chip"}
                           onClick={() => setSelectedNode(f.user === selectedNode ? null : f.user)}
                         >
-                          {f.user} · ♥{f.engagement} · {f.posts} posts
+                          {f.user} · ♥{Math.round(f.engagement)} · {f.posts} posts
                         </button>
                       ))}
                     </div>
@@ -1273,7 +1290,7 @@ function App() {
                                 {p.sentiment} · {Math.round(p.ai_score * 100)}%
                               </span>
                             </td>
-                            <td className="mono">{p.likes}/{p.retweets}</td>
+                            <td className="mono">{Math.round(p.likes)}/{Math.round(p.retweets)}</td>
                             <td className="mono small">{p.timestamp || "—"}</td>
                           </tr>
                         ))}

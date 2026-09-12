@@ -141,6 +141,43 @@ plt.tight_layout()
 st.pyplot(fig)
 plt.close(fig)
 
+# ---------------- TIMELINE ----------------
+
+st.header("📈 Timeline Analytics")
+
+if "Timestamp" in df.columns:
+    ts = pd.to_datetime(df["Timestamp"], errors="coerce")
+    monthly = ts.dropna().dt.strftime("%Y-%m").value_counts().sort_index().tail(24)
+
+    fig, ax = plt.subplots()
+    monthly.plot(kind="bar", ax=ax)
+    ax.set_title("Post Volume (last 24 months)")
+    ax.set_xlabel("Month")
+    ax.set_ylabel("Number of Posts")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
+
+# ---------------- INFLUENCERS ----------------
+
+st.header("⭐ Top Voices")
+
+for col in ("Likes", "Retweets"):
+    df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
+
+voices = (
+    (df["Likes"] + df["Retweets"])
+    .groupby(df["User"].astype(str).str.strip())
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+    .reset_index()
+)
+voices.columns = ["User", "Engagement"]
+
+st.dataframe(voices, use_container_width=True)
+
 # ---------------- SAMPLE DATA ----------------
 
 st.header("📝 Recent Social Media Posts")

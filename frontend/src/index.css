@@ -839,6 +839,8 @@ button {
   font-size: 10px;
   font-weight: 700;
   white-space: nowrap;
+  background: #f1f2f6;
+  color: #7c8799;
 }
 
 .sentiment-pill.positive {
@@ -854,6 +856,11 @@ button {
 .sentiment-pill.neutral {
   background: #eef0ff;
   color: #4f46e5;
+}
+
+.sentiment-pill.pending {
+  background: #f1f2f6;
+  color: #7c8799;
 }
 
 .pager {
@@ -946,6 +953,26 @@ button {
   .insight-list {
     grid-template-columns: 1fr;
   }
+}
+
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #ffeded;
+  border: 1px solid #f5c2c2;
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.error-banner .filter-button {
+  background: white;
+  white-space: nowrap;
 }
 
 
