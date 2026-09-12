@@ -1,0 +1,25 @@
+# Social Media Analytics — Python requirements
+# Tested with Python 3.12.10 on Windows (full path used by npm scripts:
+# C:\Users\aatre\AppData\Local\Programs\Python\Python312\python.exe)
+# Install: python -m pip install -r requirements.txt
+# CPU-only torch is sufficient (no GPU needed for the sentiment pipeline).
+
+# --- Backend API (backend/main.py): FastAPI + data handling ---
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+pandas==3.0.5
+
+# --- Streamlit dashboard (app.py) + charts (moduleb/c/d) ---
+streamlit==1.63.0
+matplotlib==3.11.2
+
+# --- Network analysis (modulee/network_analysis.py, /api/network) ---
+# scipy powers PageRank / centrality in networkx
+networkx==3.6.1
+scipy==1.18.1
+
+# --- AI sentiment pipeline (moduleb/sentiment_analysis.py) ---
+transformers==5.17.0
+accelerate==1.15.0
+safetensors==0.8.0
+torch==2.14.0
