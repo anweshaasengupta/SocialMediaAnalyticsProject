@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import Landing from "./Landing";
 import {
   PieChart,
   Pie,
@@ -98,7 +99,7 @@ function App() {
   const [data, setData] = useState<Analytics | null>(null);
   const [network, setNetwork] = useState<NetworkData | null>(null);
   const [postsData, setPostsData] = useState<PostsData | null>(null);
-  const [activePage, setActivePage] = useState("Overview");
+  const [activePage, setActivePage] = useState("Landing");
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [live, setLive] = useState(true);
@@ -333,7 +334,12 @@ function App() {
 
   return (
     <div className="app">
+      {activePage === "Landing" && (
+        <Landing onGetStarted={() => setActivePage("Overview")} />
+      )}
 
+      {activePage !== "Landing" && (
+        <>
       {/* SIDEBAR */}
       <aside className="sidebar">
 
@@ -1325,6 +1331,8 @@ function App() {
         </main>
 
       </div>
+        </>
+      )}
 
     </div>
   );
