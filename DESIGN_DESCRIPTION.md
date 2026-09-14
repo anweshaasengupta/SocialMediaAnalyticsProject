@@ -203,3 +203,8 @@ Frontend (React)
 - **Data-Driven:** Focus on insights and analytics
 
 This is a **production-ready analytics dashboard** with professional UI/UX, comprehensive data visualization, and a scalable architecture! 🚀
+
+
+
+backend url:
+https://socialmediaanalyticsproject.onrender.com/
