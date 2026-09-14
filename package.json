@@ -2,11 +2,11 @@
   "name": "socialmediaanalytics",
   "version": "1.0.0",
   "main": "index.js",
- "scripts": {
-   "dev": "concurrently \"npm run dev --prefix frontend\" \"C:\\Users\\aatre\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m uvicorn backend.main:app --reload --app-dir .\"",
-   "dev:frontend": "npm run dev --prefix frontend",
-   "dev:backend": "C:\\Users\\aatre\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m uvicorn backend.main:app --reload --app-dir ."
- },
+"scripts": {
+  "dev": "concurrently \"npm run dev --prefix frontend\" \".\\venv\\Scripts\\python.exe -m uvicorn backend.main:app --reload --app-dir .\"",
+  "dev:frontend": "npm run dev --prefix frontend",
+  "dev:backend": ".\\venv\\Scripts\\python.exe -m uvicorn backend.main:app --reload --app-dir ."
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anweshaasengupta/SocialMediaAnalyticsProject.git"
